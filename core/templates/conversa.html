@@ -1,0 +1,125 @@
+{% extends 'base_index.html' %}
+{% load aux_tags %}
+{% load staticfiles %}
+{% block titlepage %}Conversa com {{ profileVisitado.user.username }} - LogMusic{% endblock titlepage %}
+
+{% block css %}
+		
+{% endblock css %}
+
+{% block menuoptions %}
+
+  <h5 class="center-align">Frase aleatória</h5>
+  <p class="center-align">{{ frase }}</p>
+
+{% endblock menuoptions %}
+	
+			
+{% block rightbody %}
+	<div class="row">
+    <div class="col s12 m12">
+      <div class="card">
+        <div class="card-image">
+		{% if profileVisitado.user|coverimage %}
+			<img src="{{ profileVisitado.user|coverimage }}" class="sizingcut">        
+		{% else %}
+			<img src="{% static 'images/cover1.jpg' %}" class="sizingcut">
+		{% endif %}	          
+          <span class="card-title">{{ profileVisitado.user.username }}</span>
+        </div>
+        <div class="card-content">
+          <div class="row">
+          	<div class="col s12 m4 l3">
+          		{% if profileVisitado.user|profileimage %}
+      					<img src="{{ profileVisitado.user|profileimage }}" class="responsive-img circle">        
+      				{% else %}
+      					<img src="{% static 'images/user.jpg' %}" class="responsive-img">
+      				{% endif %}	
+              <p class="center-align"><b>Cidade:</b> {{ profileVisitado.city }}</p>
+              <p class="center-align"><b>Instrumento:</b> {{ profileVisitado.instrument }}</p>
+              <p class="center-align"><b>Estilo:</b> {{ profileVisitado.style }}</p>
+              <div class="row">
+                <a class="waves-effect waves-light btn btn-block" href="/profile/{{ profileVisitado.user.username }}"><i class="material-icons left">arrow_back</i>{{ profileVisitado.user }}</a>
+              </div>              
+              <div class="row">
+                <a href="#modalExcluirConversa" class="waves-effect waves-light btn btn-block"><i class="material-icons right">delete_sweep</i>Excluir</a>
+                <div id="modalExcluirConversa" class="modal">
+                  <div class="modal-content">
+                    <h4>Excluir conversa</h4>
+                    <p>Ao confirmar esta ação, esta conversa será apagada.</p>
+                  </div>
+                  <div class="modal-footer">
+                    
+                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                    <a href="#!" onclick="delete_chat({{ profileVisitado.user.pk }})" class=" modal-action modal-close waves-effect red btn-flat">Confirmar</a>
+                  </div>
+                </div>
+              </div>            
+          	</div>
+          	<div class="col s12 m8 l9">
+              <h4 class="center-align">Mensagens com {{ profileVisitado.user.username }}</h4>
+          		<div class="row">
+                <div class="col s12">
+                  <div class="card-panel white">
+                    <span class="black-text">
+                    <div class="nano">
+                      <div class="nano-content" id="oldmessages">
+                        {% for message in  mensagens %}
+                          {% if message.emissor == request.user %}
+                              <div class="col s12">
+                                <div class="card-panel blue">
+                                  <span class="white-text">
+                                    <p><b>Você disse:</b> {{ message.texto }}</p>
+                                    <small>{{ message.data }}
+                                    {% if message.visualisada %}
+                                      - Mensagem visualisada
+                                    {% endif %}</small>
+                                  </span>
+                                </div>
+                              </div>
+                          {% else %}
+                              <div class="col s12">
+                                <div class="card-panel white">
+                                  <span class="black-text">
+                                    <p><b>{{ profileVisitado.user.username }} disse:</b> {{ message.texto }}</p>
+                                    <small>{{ message.data }}
+                                    {% if message.visualisada %}
+                                      - Mensagem visualisada
+                                    {% endif %}</small>
+                                  </span>
+                                </div>
+                              </div>
+                          {% endif %}
+                        {% empty %}
+                          <p>Ainda não há mensagens entre você e {{ profileVisitado.user.username }}</p>
+                        {% endfor %}
+                        
+                      </div>
+
+                    </div>
+                    </span>
+                    <form method="post" id="fa">
+                        {% csrf_token %}
+                        <div class="row">
+                          <div class="input-field col s9">
+                            <input placeholder="Escreva a mensagem..." id="campo" type="text" class="validate">
+                          </div>
+                          <div class="col s2">
+                            <button style="margin-top: 24px;" class="waves-effect grey btn-flat">Enviar</button>
+                          </div>
+                       </div>
+                    </form>
+                    <div class="container center-align" id="warn">
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+          	</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+	
+{% endblock rightbody %}

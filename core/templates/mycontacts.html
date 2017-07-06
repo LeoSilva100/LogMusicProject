@@ -1,0 +1,52 @@
+{% extends 'base_index.html' %}
+{% load aux_tags %}
+{% load staticfiles %}
+{% block titlepage %}Inbox - LogMusic{% endblock titlepage %}
+
+{% block css %}
+<style type="text/css">
+  .slick-prev:before,
+    .slick-next:before {
+        color: black;
+    }
+    
+</style>
+{% endblock css %}
+
+{% block menuoptions %}
+  <h5 class="center-align">Frase aleatória</h5>
+  <p class="center-align">{{ frase }}</p>
+{% endblock menuoptions %}
+	
+			
+{% block rightbody %}
+
+
+<div class="card-panel white medium">
+    <h4 class="center-align">Inbox</h4>
+      <div id="slide-contatos">
+        {% for contato in contatos_recentes %}
+          <div class="elementoContato">
+            {% if contato.0|profileimage %}
+              <img class="circle responsive-img" src="{{ contato.0|profileimage }}" width="150" height="150" style="display: block;margin-left: auto;margin-right: auto;">
+            {% else %}
+              <img class="circle responsive-img" src="{% static 'images/user.jpg' %}" width="150" height="150" style="display: block;margin-left: auto;margin-right: auto;">
+            {% endif %}
+            {% if contato.2 == False %}
+              <h5 style="text-align: center;">{{ contato.0.username }}</h5>
+              <a class="btn btn-block red" href="/inbox/message/{{ contato.0.pk }}">Novas</a>
+            {% else %}
+              <h5 style="text-align: center;">{{ contato.0.username }}</h5>
+              <a class="btn btn-block" href="/inbox/message/{{ contato.0.pk }}">Mensagem</a>
+            {% endif %}
+            
+
+          </div>
+        {% empty %}
+          <h5 class="center-align">Você ainda não conversou com ninguém.</h5>
+        {% endfor %}
+    </div>  
+</div>
+	 <script language="javascript" src="{% static 'core/css/slick/slick.min.js' %}"></script>
+
+{% endblock rightbody %}

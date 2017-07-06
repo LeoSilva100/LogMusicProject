@@ -1,0 +1,72 @@
+/* fallback */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(file.woff2) format('woff2');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+body{
+  font-family: 'Maven Pro', sans-serif;
+}
+
+.lin{
+  color: white;
+}
+
+.content {
+  min-height: calc(100vh - 70px);
+}
+.footer {
+  height: 50px;
+}
+
+.semfunc{
+  display: none;
+}
+
+#map_container{
+  position: relative;
+}
+#map{
+    height: 0;
+    overflow: hidden;
+    padding-bottom: 22.25%;
+    padding-top: 30px;
+    position: relative;
+}
+
+.img-topo{
+  margin-left: 0px;
+  margin-top: 5px;
+}
+
+.sizingcut{
+  width: 300px;
+  height: 100px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.borda{
+  border: thin solid #BEBEBE;
+  padding: 5px;
+  margin: 0px 10px 10px 0;
+}
+

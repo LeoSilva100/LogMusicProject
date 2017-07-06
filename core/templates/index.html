@@ -1,0 +1,259 @@
+{% extends 'base_index.html' %}
+{% load staticfiles %}
+{% block titlepage %}LogMusic - Home{% endblock titlepage %}
+
+{% block css %}
+		
+{% endblock css %}
+
+{% block menuoptions %}
+	<h5 class="center-align">Frase aleatória</h5>
+	<p class="center-align">{{ frase }}</p>
+
+{% endblock menuoptions %}
+	
+			
+{% block rightbody %}
+
+		<div class="card-panel white medium">
+			<span class="black-text">
+			<div class="row">
+				<div class="col s12 m6">
+		          <div class="card blue-grey darken-1">
+		          	{% if promusic %}
+
+		            <div class="card-content white-text">
+					<span class="card-title">Perfil de músico</span>
+					  <i class="material-icons medium left">account_circle</i>
+					  <p><b>Nome: </b>{{ promusic.city }}<br>
+					  <b>Estilo: </b>{{ promusic.style }}<br>
+					  <b>Instrumento: </b>{{ promusic.instrument }}</p>
+					</div>
+					<div class="card-action">
+					  <a href="#modalEditProfileM" >Editar</a>
+					  <a href="#deleteProfile" >Excluir perfil</a>
+					  <a href="/profile/{{ promusic.user.username }}" >Ver perfil</a>
+					</div>
+
+					<div id="deleteProfile" class="modal">
+						<div class="modal-content">
+							<h4>Excluir perfil de músico</h4>
+							<p>Ao confirmar esta ação, esta seu perfil de músico será deletado.</p>
+						</div>
+						<div class="modal-footer">
+							
+							<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+							<a href="/deleteProfile" class=" modal-action modal-close waves-effect red btn-flat">Ok</a>
+						</div>
+					</div>
+
+					<div id="modalEditProfileM" class="modal">
+					<div class="modal-content">
+					  {% csrf_token %}
+					  <h4>Crie seu perfil de músico</h4>
+					  <div class="row">
+					  
+					  <div class="row">
+					  	
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: 23" id="age" type="number" class="validate" value="{{ promusic.age }}" required>
+						  <label for="age">Idade</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: São Paulo" id="city" type="text" class="validate" value="{{ promusic.city }}" required>
+						  <label for="city">Cidade</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: Blues" id="style" type="text" class="validate" value="{{ promusic.style }}" required>
+						  <label for="style">Estilo musical</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: Guitarra" id="instrument" type="text" class="validate" value="{{ promusic.instrument }}" required>
+						  <label for="instrument">Instrumento</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: SP" id="state" type="text" class="validate" value="{{ promusic.state }}" required>
+						  <label for="state">Estado</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: Avenida Brasil" id="adress" type="text" class="validate" value="{{ promusic.adress }}" required>
+						  <label for="adress">Endereço</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: 4002 8922" id="phone" type="tel" class="validate" value="{{ promusic.phone }}" required>
+						  <label for="phone">Telefone</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: https://www.facebook.com/user" id="face" type="text" value="{{ promusic.face }}" class="validate" required>
+						  <label for="face">Facebook</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: https://www.twitter.com/user" id="twitter" type="text" class="validate" value="{{ promusic.twitter }}" required>
+						  <label for="twitter">Twitter</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: https://www.instagram.com/user" id="insta" type="text" class="validate" value="{{ promusic.insta }}" required>
+						  <label for="insta">Instagram</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: https://www.youtube.com/embed/G7vYlTuaDhU" id="video" type="text" class="validate" value="{{ promusic.video }}" required>
+						  <label for="video">Video</label>
+						</div>
+						
+						</div>
+					  </div>    
+
+					 <div class="container center-align">
+				      <a class="modal-action modal-close waves-effect waves-light btn green" onclick="addMusicProfile();" href="#!">Atualizar</a>
+				      <a class="modal-action modal-close waves-effect waves-light btn black" href="#!">Fechar</a>
+				     </div>
+					</div>
+				  </div>
+
+					{% else %}
+
+					<div class="card-content white-text">
+					<span class="card-title">Perfil de músico</span>
+					  <i class="material-icons medium left">account_circle</i>
+					  <p>Clique em "Crie um perfil" para participar da LogMusic e fazer parte das pesquisas.</p>
+					</div>
+					<div class="card-action">
+					  <a href="#createProfile">Crie seu perfil</a>
+					</div>
+					<div id="createProfile" class="modal">
+					<div class="modal-content">
+						{% csrf_token %}
+					  <h4>Crie seu perfil de músico</h4>
+					  <div class="row">
+					  
+					  <div class="row">
+					  	
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: 23" id="age" type="number" class="validate" required>
+						  <label for="age">Idade</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: São Paulo" id="city" type="text" class="validate" required>
+						  <label for="city">Cidade</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: Blues" id="style" type="text" class="validate" required>
+						  <label for="style">Estilo musical</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: Guitarra" id="instrument" type="text" class="validate" required>
+						  <label for="instrument">Instrumento</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: SP" id="state" type="text" class="validate" required>
+						  <label for="state">Estado</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: Avenida Brasil" id="adress" type="text" class="validate" required>
+						  <label for="adress">Endereço</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: 4002 8922" id="phone" type="tel" class="validate" required>
+						  <label for="phone">Telefone</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: https://www.facebook.com/user" id="face" type="text" class="validate" required>
+						  <label for="face">Facebook</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: https://www.twitter.com/user" id="twitter" type="text" class="validate" required>
+						  <label for="twitter">Twitter</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: https://www.instagram.com/user" id="insta" type="text" class="validate" required>
+						  <label for="insta">Instagram</label>
+						</div>
+						<div class="input-field col s12">
+						  <input placeholder="Ex.: https://www.youtube.com/embed/G7vYlTuaDhU" id="video" type="text" class="validate" required>
+						  <label for="video">Video</label>
+						</div>
+						
+						</div>
+					  </div>    
+
+					 <div class="container center-align">
+				      <a class="modal-action modal-close waves-effect waves-light btn green" onclick="addMusicProfile();" href="#!">Salvar</a>
+				      <a class="modal-action modal-close waves-effect waves-light btn black" href="#!">Fechar</a>
+				     </div>
+					</div>
+				  </div>
+						
+					{% endif %}
+		            
+		          </div>
+		        </div>
+		        <div class="col s12 m6">
+		          <div class="card red">
+		            <div class="card-content white-text">
+					<span class="card-title">Inbox</span>
+					  <i class="material-icons medium left">mail</i>
+					  {% if quantidade %}
+					  	<h5>{{ quantidade }} mensagens</h5>
+					  	<p>Clique em "Abrir inbox" para visualizar</p>
+					  {% else %}
+					  	<p>Faça novas amizades! Para fazer pesquisas sobre músicos clique em "Pesquisar" logo abaixo.</p>
+					  {% endif %}					  
+					</div>
+					<div class="card-action">
+					  <a href="/inbox/">Abrir inbox</a>
+					</div>
+					</div>
+		        </div>
+		        <div class="col s12 m6">
+		          <div class="card green">
+		            <div class="card-content white-text">
+					<span class="card-title">Busca</span>
+					  <i class="material-icons medium left">search</i>
+					  <p><p>Faça novas amizades! Para fazer pesquisas sobre músicos clique em "Pesquisar" logo abaixo.</p></p>
+					</div>
+					<div class="card-action">
+					  <a href="#modalSearch">Pesquisar</a>
+					</div>
+		          </div>
+		            <div id="modalSearch" class="modal">
+				    <div class="modal-content">
+				      <h4>Busca por músicos</h4>
+				      <div class="row">
+				      <form method="post" id="f">
+				      {% csrf_token %}
+				      <div class="row">
+				        <div class="input-field col s9">
+				          <input placeholder="Ex.: Leonard" id="campo" type="text" class="validate">
+				        </div>
+				        <div class="col s2">
+				          <button style="margin-top: 24px;" class="waves-effect grey btn-flat" onclick="search_users(campo.value);">Pesquisar</button>
+				        </div>
+				     </div>
+				     </form>
+				    <div class="row resultTxt">
+				    </div>
+				    <div class="row">
+				      <ul class="collection with-header resultData" id="lista">
+				      </ul>
+				    </div>   
+				    </div>   
+				    <div class="container center-align">
+				      <a class="modal-action modal-close waves-effect waves-light btn black" href="#!">Fechar</a>
+				    </div> 
+				  </div>
+				  </div>
+		        </div>
+		        <div class="col s12 m6">
+		          <div class="card blue">
+		            <div class="card-content white-text">
+		              <span class="card-title">Sobre</span>
+		              <i class="material-icons medium left">info_outline</i>
+		              <p><b>LogMusic</b> é uma plataforma voltada para músicos que querem criar bandas ou interagir com outros músicos ao redor do mundo.<br><b>LogMusic</b>, a rede social dos músicos.</p>
+		            </div>
+		          </div>
+		        </div>
+			</div>
+			</span>
+		</div>
+	
+{% endblock rightbody %}

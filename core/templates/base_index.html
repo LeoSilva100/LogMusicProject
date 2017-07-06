@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load aux_tags %}
+
+
+{% block body %}
+
+<div class="row">
+    <!-- Overlay for fixed sidebar -->
+    <div class="col s3 hide-on-med-and-down" style="margin-left: -10px;">
+        <aside id="sidebar" class="sidebar sidebar-default open" role="navigation">
+            <!-- Sidebar header -->
+            {% if request.user|coverimage %}
+                <div class="sidebar-header header-cover" style="background-image: url({{request.user|coverimage}});">                  
+            {% else %}
+                <div class="sidebar-header header-cover" style="background-image: url({% static 'images/cover1.jpg' %});">
+            {% endif %}
+            
+                <!-- Top bar -->
+                <div class="top-bar"></div>
+                <!-- Sidebar toggle button -->
+                <button type="button" class="sidebar-toggle">
+                    <i class="icon-material-sidebar-arrow"></i>
+                </button>
+                <!-- Sidebar brand image -->
+                <div class="sidebar-image">
+                    {% if request.user|profileimage %}
+                        <img src="{{ request.user|profileimage }}">                 
+                    {% else %}
+                        <img src="{% static 'images/user1.jpg' %}">
+                    {% endif %}
+                    
+                </div>
+                <!-- Sidebar brand name -->
+                <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+                    {{ request.user.email }}
+                    <b class="careta"></b>
+                </a>
+            </div>
+            <ul class="nav sidebar-nav">
+            <li class="dropdown">
+                
+                <ul id="settings-dropdown" class="dropdown-menu">
+                    <li>
+                        <a href="#" tabindex="-1">
+                            Sair
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#modalEditProfile" tabindex="-1">
+                            Editar perfil
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" tabindex="-1">
+                            Excluir conta
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Sidebar navigation -->
+            {% block menuoptions %}
+                
+            {% endblock menuoptions %}
+            <hr>
+            <h5 class="center-align">Seus dados</h5>
+            <p class="center-align">Username: {{ request.user.username }}<br>Email: {{ request.user.email }}<br>Desde: {{ request.user.date_joined }}</p>
+            <hr>
+            <li>
+                <a href="http://somosmusica.com.br/como-ser-um-musico-de-sucesso-os-cinco-pontos-chave-para-chegar-la/" target="_blank">
+                    <span><i class="tiny material-icons">trending_up</i></span> Como ser um músico
+                </a>
+            </li>
+            <li>
+                <a href="https://www.obaoba.com.br/musica/noticia/10-dicas-basicas-de-como-montar-uma-banda" target="_blank">
+                    <span><i class="tiny material-icons">live_help</i></span> Dicas para montar a primeira banda
+                </a>
+            </li>
+            <li>
+                <a href="http://producaomusicalnaeradigital.com/7-dicas-para-auxiliar-na-hora-da-composicao-de-uma-musica/" target="_blank">
+                    <span><i class="tiny material-icons">developer_board</i></span> Dicas de composição
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span><i class="tiny material-icons">favorite</i></span> Contribuir com o projeto
+                </a>
+            </li>
+        </ul>
+        </aside>
+    </div>
+<div id="modalEditProfile" class="modal">
+    <div class="modal-content">
+      <h4>Editar perfil</h4>
+      <p>Você poderá editar: <i>username</i>, <i>email</i>, <i>foto de perfil</i> e <i>foto de capa</i>
+      <div class="row">
+    
+      <div class="row">
+        <div class="input-field col s6">
+          <input placeholder="tanenbaum" id="username" type="text" value="{{ request.user.username }}" class="validate" required>
+          <label for="username">Username</label>
+        </div>
+        <div class="input-field col s6">
+          <input placeholder="tan@gmail.com" value="{{ request.user.email }}" id="email" type="text" class="validate" required>
+          <label for="email">Email</label>
+        </div>
+        <div class="col s12">
+            <div class="file-field input-field">
+              <div class="btn black">
+                <span>Imagem para perfil</span>
+                <input type="file" id="profile" name="imagem">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+        </div>
+        <div class="col s12">
+            <div class="file-field input-field">
+              <div class="btn black">
+                <span>Imagem para capa</span>
+                <input type="file" id="cover" name="imagem">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+        </div>
+      </div>    
+     </div>
+    <div class="container center-align">
+      <a class="modal-action modal-close waves-effect waves-light btn green" onclick="editProfile();" href="#!">Salvar</a>
+      <a class="modal-action modal-close waves-effect waves-light btn black" href="#!">Fechar</a>
+    </div>
+    </div>
+  </div>
+<!-- Material sidebar -->
+
+<div class="col s12 m12 l9">
+<div class="constructor">
+{% block rightbody %}
+
+{% endblock rightbody %}
+</div>
+    
+
+</div>
+
+
+</div>
+    
+
+{% endblock body %}
+
+
+{% block jscss %}
+    
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/sidemenu.css' %}"  media="screen,projection"/>
+    <script type="text/javascript" src="{% static 'js/sidemenu.js' %}"></script>
+    <script language="javascript" src="{% static '/js/visibility.js' %}"></script>
+    
+    <script language="javascript" src="{% static '/js/nano.js' %}"></script>
+    
+    {% block js1 %}
+        
+    {% endblock js1 %}
+{% endblock jscss %}

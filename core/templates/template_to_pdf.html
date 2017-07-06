@@ -1,0 +1,55 @@
+<html>
+<head>
+	<title>Dados de {{ element }}</title>
+</head>
+<body>
+	<center>
+		<h1>Plataforma <i>CASINHA</i></h1>
+
+		<h3><i>CAsinha Social Integration Network for Home Assistant</i></h3>
+		<p>CASINHA (CAsinha Social Integration Network for Home Assistant) é uma ferramenta web onde você pode automatizar, controlar e monitorar qualquer ambiente através da Internet das Coisas.</p>
+		<p>O projeto é livre no <a href="https://github.com/CASINHAProject" target="_blank">repositório</a> concedido por <a href="https://github.com/diegofsousa" target="_blank">Diego Fernando</a></p>
+		<h2>Dados de <i>{{ element }}</i></h2>
+	</center>
+
+	<p>
+		<center>
+			<h4>Ambientes criados:</h4>
+			<ul>
+				{% for amb in  myhouses %}
+					<li>"{{ amb.name }}"</li>
+				{% empty %}
+					<li>Nenhum ambiente foi criado.</li>
+				{% endfor %}
+			</ul>
+		</center>
+	</p>
+	
+	<p>
+		<center>
+			<h4>Ambientes que participa:</h4>
+			<ul>
+				{% for amb in  myhousespart %}
+					<li>"{{ amb.name }}"</li>
+				{% empty %}
+					<li>Não participa de nenhum ambiente.</li>
+				{% endfor %}
+			</ul>
+		</center>
+	</p>
+
+	<p>
+		<center>
+			<h2>Histórico:</h2>
+			<ul>
+				{% for message in mymessages %}
+					<li>{{ message.text|safe }} em <b>{{ message.house.name }} - em {{ message.crated_by }}</b></li>
+				{% empty %}
+					<li>Nada a mostrar</li>
+				{% endfor %}
+			</ul>
+		</center>
+	</p>
+
+</body>
+</html>
