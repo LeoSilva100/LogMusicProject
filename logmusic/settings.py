@@ -71,13 +71,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'logmusic.wsgi.application'
 
-AWS_QUERYSTRING_AUTH = False
-AWS_ACCESS_KEY_ID = 'AKIAJFB4K65KCZETBMNQ'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'sudestecolor'
-MEDIA_URL = 'http://sudestecolor.s3.amazonaws.com/'
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
